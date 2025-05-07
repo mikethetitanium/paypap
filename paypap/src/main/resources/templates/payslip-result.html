@@ -3,11 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <title>Payroll Result</title>
+    <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <style>
+        /* General Page Styles */
+        body, html {
+            height: 100%;
+            font-family: 'Georgia', serif; /* Classic serif font for vintage feel */
+            background-color: #3e2723; /* Deep brown background */
+            color: #f5f5f5; /* Light beige text color */
+            margin: 0;
+        }
+
+        .container {
+            height: 100%; /* Full height for centering */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            color: #ffd54f; /* Muted gold for the heading */
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle text shadow for depth */
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #f5f5f5; /* Light beige text for readability */
+        }
+
+        .result-container {
+            background-color: #5d4037; /* Dark wood color for result box */
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .result-container span {
+            font-weight: bold;
+            color: #ffd54f; /* Muted gold for results */
+        }
+
+        .result-container p {
+            font-size: 1.2rem;
+        }
+
+        .back-btn {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            padding: 12px 25px;
+            background-color: #ffd54f; /* Muted gold for the button */
+            color: #3e2723; /* Deep brown text color */
+            border-radius: 5px;
+            width: 120px;
+            margin-left: auto;
+            margin-right: auto;
+            text-transform: uppercase;
+        }
+
+        .back-btn:hover {
+            background-color: #ffb300; /* Darker gold on hover */
+        }
+    </style>
 </head>
 <body>
-    <h2>Payroll Calculation Result</h2>
-    <p>Gross Salary: <span th:text="${grossSalary}"></span></p>
-    <p>Tax: <span th:text="${tax}"></span></p>
-    <p>Net Salary: <span th:text="${netSalary}"></span></p>
+
+    <div class="container">
+        <h2 class="text-center">Payroll Calculation Result</h2>
+
+        <div class="result-container">
+            <p>Gross Salary: <span th:text="${grossSalary}"></span></p>
+            <p>Tax: <span th:text="${tax}"></span></p>
+            <p>Net Salary: <span th:text="${netSalary}"></span></p>
+
+            <a href="/" class="back-btn">Back</a> <!-- Link to go back to the form -->
+        </div>
+    </div>
+
 </body>
 </html>

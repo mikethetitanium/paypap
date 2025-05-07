@@ -1,15 +1,90 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Payroll Calculator</title>
+  <meta charset="UTF-8">
+  <title>Payroll Calculator</title>
+  <link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <style>
+    body, html {
+      height: 100%;
+      background-color: #00bcd4; /* Cyan background */
+    }
+    .navbar-brand, h2 {
+      color: #e4007f; /* Magenta text */
+    }
+    .card {
+      background-color: #ffffff;
+      border: 1px solid #e4007f; /* Magenta border */
+    }
+    .btn-primary {
+      background-color: #e4007f; /* Magenta button */
+      border-color: #e4007f;
+    }
+    .btn-primary:hover {
+      background-color: #d10073; /* Darker magenta on hover */
+      border-color: #d10073;
+    }
+    .card-body {
+      color: #333333; /* Dark text for readability */
+    }
+    .form-control {
+      border-color: #00bcd4; /* Cyan input borders */
+    }
+    .form-control:focus {
+      border-color: #00bcd4; /* Cyan focus border */
+      box-shadow: 0 0 0 0.25rem rgba(0, 188, 212, 0.25);
+    }
+  </style>
 </head>
-<body>
-    <h2>Payroll Calculator</h2>
-    <form th:action="@{/calculate}" method="post">
-        <label for="grossSalary">Gross Salary:</label>
-        <input type="number" id="grossSalary" name="grossSalary" required>
-        <button type="submit">Calculate</button>
-    </form>
+<body class="d-flex justify-content-center align-items-center">
+
+  <div class="container">
+    <h2 class="text-center mb-4">PayPap - Payroll Calculator</h2>
+
+    <div class="card mx-auto shadow" style="max-width: 500px;">
+      <div class="card-body">
+        <form th:action="@{/calculate}" method="post">
+          <div class="row">
+            <div class="col-6 mb-3"><label for="basicSalary">Basic Salary:</label></div>
+            <div class="col-6 mb-3"><input type="number" id="basicSalary" name="basicSalary" required class="form-control"></div>
+          </div>
+          <div class="row">
+            <div class="col-6 mb-3"><label for="otherAllowance1">Other Allowances(Statutory):</label></div>
+            <div class="col-6 mb-3"><input type="number" value="0" id="otherAllowance1" name="otherAllowance1" required class="form-control"></div>
+          </div>
+          <div class="row">
+            <div class="col-6 mb-3"><label for="otherAllowance">Other Allowances(Non - Statutory):</label></div>
+            <div class="col-6 mb-3"><input type="number" value="0" id="otherAllowance" name="otherAllowance" required class="form-control"></div>
+          </div>
+          <div class="row">
+            <div class="col-6 mb-3"><label for="pensionContribution">Pension Contribution:</label></div>
+            <div class="col-6 mb-3"><input type="number" value="0" id="pensionContribution" name="pensionContribution" required class="form-control"></div>
+          </div>
+          <div class="row">
+            <div class="col-6 mb-3"><label for="nssfContribution">NSSF Contribution:</label></div>
+            <div class="col-6 mb-3"><input type="number" value="0" id="nssfContribution" name="nssfContribution" required class="form-control"></div>
+          </div>
+          <div class="row">
+            <div class="col-6 mb-3"><label for="housingLevy">Housing Levy:</label></div>
+            <div class="col-6 mb-3"><input type="number" value="0" id="housingLevy" name="housingLevy" required class="form-control"></div>
+          </div>
+          <div class="row">
+            <div class="col-6 mb-3"><label for="shif">SHIF:</label></div>
+            <div class="col-6 mb-3"><input type="number" value="0" id="shif" name="shif" required class="form-control"></div>
+          </div>
+          <div class="row">
+            <div class="col-6"></div>
+            <div class="col-6 mb-3">
+              <button type="submit" class="btn btn-primary w-100">Calculate</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
