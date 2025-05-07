@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payroll Calculator</title>
+</head>
+<body>
+    <h2>Payroll Calculator</h2>
+    <form th:action="@{/calculate}" method="post">
+        <label for="grossSalary">Gross Salary:</label>
+        <input type="number" id="grossSalary" name="grossSalary" required>
+        <button type="submit">Calculate</button>
+    </form>
+</body>
+</html>
