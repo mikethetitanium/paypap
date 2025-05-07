@@ -8,43 +8,89 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
     crossorigin="anonymous">
   <style>
+    /* General Page Styles */
     body, html {
-      height: 100%;
-      background-color: #00bcd4; /* Cyan background */
+      height: 100%; /* Full height */
+      font-family: 'Georgia', serif; /* Classic serif font for vintage feel */
+      background-color: #3e2723; /* Deep brown background */
+      color: #f5f5f5; /* Light beige text color */
+      margin: 0;
     }
-    .navbar-brand, h2 {
-      color: #e4007f; /* Magenta text */
+
+    .container {
+      height: 100%; /* Full height for centering */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center; /* Center content horizontally */
     }
+
+    h2 {
+      color: #ffd54f; /* Muted gold for the heading */
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4); /* Stronger shadow for visibility */
+    }
+
     .card {
-      background-color: #ffffff;
-      border: 1px solid #e4007f; /* Magenta border */
+      background-color: #5d4037; /* Dark wood color for the card */
+      border-radius: 8px;
+      padding: 25px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      margin-top: 20px;
+      max-width: 500px;
+      width: 100%;
     }
-    .btn-primary {
-      background-color: #e4007f; /* Magenta button */
-      border-color: #e4007f;
-    }
-    .btn-primary:hover {
-      background-color: #d10073; /* Darker magenta on hover */
-      border-color: #d10073;
-    }
+
     .card-body {
-      color: #333333; /* Dark text for readability */
+      color: #f5f5f5; /* Light beige text for readability */
     }
+
+    label {
+      color: #ffd54f; /* Muted gold for labels */
+    }
+
     .form-control {
-      border-color: #00bcd4; /* Cyan input borders */
+      background-color: #3e2723; /* Dark background for input fields */
+      border: 1px solid #ffd54f; /* Muted gold borders */
+      color: #f5f5f5; /* Light text in inputs */
     }
+
     .form-control:focus {
-      border-color: #00bcd4; /* Cyan focus border */
-      box-shadow: 0 0 0 0.25rem rgba(0, 188, 212, 0.25);
+      border-color: #ffd54f; /* Muted gold border on focus */
+      box-shadow: 0 0 0 0.25rem rgba(255, 213, 79, 0.25); /* Gold focus shadow */
     }
+
+    .btn-primary {
+      background-color: #ffd54f; /* Muted gold button */
+      border-color: #ffd54f;
+      color: #3e2723; /* Deep brown text */
+    }
+
+    .btn-primary:hover {
+      background-color: #ffb300; /* Darker gold on hover */
+      border-color: #ffb300;
+    }
+
+    .row {
+      margin-bottom: 20px; /* Space between form rows */
+    }
+
+    /* Ensure no scroll by setting max height and overflow for card */
+    .card {
+      max-height: 80vh; /* Limit height to 80% of the viewport */
+      overflow-y: auto; /* Enable scroll inside the card if content exceeds */
+    }
+
   </style>
 </head>
-<body class="d-flex justify-content-center align-items-center">
+<body>
 
   <div class="container">
     <h2 class="text-center mb-4">PayPap - Payroll Calculator</h2>
 
-    <div class="card mx-auto shadow" style="max-width: 500px;">
+    <div class="card mx-auto shadow">
       <div class="card-body">
         <form th:action="@{/calculate}" method="post">
           <div class="row">
@@ -56,7 +102,7 @@
             <div class="col-6 mb-3"><input type="number" value="0" id="otherAllowance1" name="otherAllowance1" required class="form-control"></div>
           </div>
           <div class="row">
-            <div class="col-6 mb-3"><label for="otherAllowance">Other Allowances(Non - Statutory):</label></div>
+            <div class="col-6 mb-3"><label for="otherAllowance">Other Allowances(Non - Statutory ; Only impact PAYE):</label></div>
             <div class="col-6 mb-3"><input type="number" value="0" id="otherAllowance" name="otherAllowance" required class="form-control"></div>
           </div>
           <div class="row">
