@@ -56,9 +56,9 @@ public class PayrollController {
     		 consideredMortgage=mortgageInterest;
     	 }
         double grossSalary = basicSalary + otherAllowance + otherAllowance1;
-        double taxableIncome = grossSalary - consideredContribution-consideredMortgage;
+        double taxableIncome = grossSalary - consideredContribution-consideredMortgage - shif - housingLevy; // Calculate taxable income
         double tax = calculateTax(taxableIncome);
-        double netSalary = grossSalary - tax;
+        double netSalary = grossSalary - tax - shif - housingLevy; // Calculate net salary after tax and other deductions
         double shifcal = calculateShif(basicSalary, otherAllowance); // Calculate SHIF based on basic salary and other allowance
 
         // Add calculated values to the model for display in the result page

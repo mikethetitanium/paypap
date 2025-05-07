@@ -4,170 +4,198 @@
   <meta charset="UTF-8">
   <title>Payroll Calculator</title>
   <link rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-    crossorigin="anonymous">
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
   <style>
-    /* General Page Styles */
     body, html {
-      height: 100%; /* Full height */
-      font-family: 'Georgia', serif; /* Classic serif font for vintage feel */
-      background-color: #005F6A; /* Deep blue background similar to PeoplesHR */
-      color: #f5f5f5; /* Light beige text color */
+      height: 100%;
+      font-family: 'Georgia', serif;
+      background-color: #005F6A;
+      color: #f5f5f5;
       margin: 0;
     }
 
     .container {
-      height: 100%; /* Full height for centering */
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center; /* Center content horizontally */
+      text-align: center;
     }
 
     h2 {
-      color: #FFC107; /* Gold for the heading */
+      color: #FFC107;
       font-size: 2.5rem;
       margin-bottom: 20px;
-      text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4); /* Stronger shadow for visibility */
+      text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
     }
 
     .card {
-      background-color: #00796B; /* Teal background for the card */
+      background-color: #00796B;
       border-radius: 8px;
       padding: 25px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       margin-top: 20px;
       max-width: 500px;
       width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
     }
 
     .card-body {
-      color: #f5f5f5; /* Light beige text for readability */
+      color: #f5f5f5;
     }
+    .form-control[readonly] {
+  background-color: #004D40 !important; /* Match regular input background */
+  color: #f5f5f5;
+  opacity: 1; /* Prevent default dimmed appearance */
+}
+    
 
     label {
-      color: #FFC107; /* Gold for labels */
+      color: #FFC107;
     }
 
     .form-control {
-      background-color: #004D40; /* Dark teal background for input fields */
-      border: 1px solid #FFC107; /* Gold borders */
-      color: #f5f5f5; /* Light text in inputs */
+      background-color: #004D40;
+      border: 1px solid #FFC107;
+      color: #f5f5f5;
     }
 
     .form-control:focus {
-      border-color: #FFC107; /* Gold border on focus */
-      box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25); /* Gold focus shadow */
+      border-color: #FFC107;
+      box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
     }
 
     .btn-primary {
-      background-color: #FFC107; /* Gold button */
+      background-color: #FFC107;
       border-color: #FFC107;
-      color: #005F6A; /* Deep blue text */
+      color: #005F6A;
     }
 
     .btn-primary:hover {
-      background-color: #FF8F00; /* Darker gold on hover */
+      background-color: #FF8F00;
       border-color: #FF8F00;
     }
 
     .btn-clear {
-      background-color: #BDBDBD; /* Gray color for clear button */
-      color: #005F6A; /* Deep blue text */
+      background-color: #BDBDBD;
+      color: #005F6A;
       border: 1px solid #BDBDBD;
     }
 
     .btn-clear:hover {
-      background-color: #9E9E9E; /* Darker gray on hover */
+      background-color: #9E9E9E;
       border-color: #9E9E9E;
     }
 
     .row {
-      margin-bottom: 20px; /* Space between form rows */
-    }
-
-    /* Ensure no scroll by setting max height and overflow for card */
-    .card {
-      max-height: 80vh; /* Limit height to 80% of the viewport */
-      overflow-y: auto; /* Enable scroll inside the card if content exceeds */
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h2 class="text-center mb-4">PayPap - Payroll Calculator</h2>
+<div class="container">
+  <h2 class="text-center mb-4">PayPap - Payroll Calculator</h2>
 
-    <div class="card mx-auto shadow">
-      <div class="card-body">
-        <form th:action="@{/calculate}" method="post">
-          <div class="row">
-            <div class="col-6 mb-3"><label for="basicSalary">Basic Salary:</label></div>
-            <div class="col-6 mb-3">
-              <input type="number" step="any" id="basicSalary" name="basicSalary" required class="form-control" th:value="${basicSalary}"/>
-            </div>
+  <div class="card mx-auto shadow">
+    <div class="card-body">
+      <form th:action="@{/calculate}" method="post">
+        <div class="row">
+          <div class="col-6 mb-3"><label for="basicSalary">Basic Salary:</label></div>
+          <div class="col-6 mb-3">
+            <input type="number" step="any" id="basicSalary" name="basicSalary" required class="form-control" th:value="${basicSalary}"/>
           </div>
-          <div class="row">
-            <div class="col-6 mb-3"><label for="otherAllowance1">Other Allowances(Statutory):</label></div>
-            <div class="col-6 mb-3">
-              <input type="number" step="any" id="otherAllowance1" name="otherAllowance1" required class="form-control" th:value="${otherAllowance1}"/>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-6 mb-3"><label for="otherAllowance1">Other Allowances (Statutory):</label></div>
+          <div class="col-6 mb-3">
+            <input type="number" step="any" id="otherAllowance1" name="otherAllowance1" required class="form-control" th:value="${otherAllowance1}"/>
           </div>
-          <div class="row">
-            <div class="col-6 mb-3"><label for="otherAllowance">Other Allowances(Non - Statutory):</label></div>
-            <div class="col-6 mb-3">
-              <input type="number" step="any" id="otherAllowance" name="otherAllowance" required class="form-control" th:value="${otherAllowance}"/>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-6 mb-3"><label for="otherAllowance">Other Allowances (Non - Statutory):</label></div>
+          <div class="col-6 mb-3">
+            <input type="number" step="any" id="otherAllowance" name="otherAllowance" required class="form-control" th:value="${otherAllowance}"/>
           </div>
-          <div class="row">
-            <div class="col-6 mb-3"><label for="pensionContribution">Pension Contribution:</label></div>
-            <div class="col-6 mb-3">
-              <input type="number" step="any" id="pensionContribution" name="pensionContribution" required class="form-control" th:value="${pensionContribution}"/>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-6 mb-3"><label for="pensionContribution">Pension Contribution:</label></div>
+          <div class="col-6 mb-3">
+            <input type="number" step="any" id="pensionContribution" name="pensionContribution" required class="form-control" th:value="${pensionContribution}"/>
           </div>
-          <div class="row">
-            <div class="col-6 mb-3"><label for="nssfContribution">NSSF Contribution:</label></div>
-            <div class="col-6 mb-3">
-              <input type="number" step="any" id="nssfContribution" name="nssfContribution" required class="form-control" th:value="${nssfContribution}"/>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-6 mb-3"><label for="nssfContribution">NSSF Contribution:</label></div>
+          <div class="col-6 mb-3">
+            <input type="number" step="any" id="nssfContribution" name="nssfContribution" required class="form-control" th:value="${nssfContribution}"/>
           </div>
-          <div class="row">
-            <div class="col-6 mb-3"><label for="housingLevy">Housing Levy:</label></div>
-            <div class="col-6 mb-3">
-              <input type="number" step="any" id="housingLevy" name="housingLevy" required class="form-control" th:value="${housingLevy}"/>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-6 mb-3"><label for="housingLevy">Housing Levy:</label></div>
+          <div class="col-6 mb-3">
+            <input type="number" step="any" id="housingLevy" name="housingLevy" required class="form-control" th:value="${housingLevy}"/>
           </div>
-          <div class="row">
-            <div class="col-6 mb-3"><label for="shif">SHIF:</label></div>
-            <div class="col-6 mb-3">
-              <input type="number" step="any" id="shif" name="shif" required class="form-control" th:value="${shifcal}"/>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-6 mb-3"><label for="shif">SHIF:</label></div>
+          <div class="col-6 mb-3">
+            <input type="number" step="any" id="shif" name="shif" required class="form-control" readonly th:value="${shif}"/>
           </div>
-           <div class="row">
-            <div class="col-6 mb-3"><label for="mortgageInterest">Mortgage Interest:</label></div>
-            <div class="col-6 mb-3">
-              <input type="number" step="any" id="mortgageInterest" name="mortgageInterest" required class="form-control" th:value="${mortgageInterest}"/>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-6 mb-3"><label for="mortgageInterest">Mortgage Interest:</label></div>
+          <div class="col-6 mb-3">
+            <input type="number" step="any" id="mortgageInterest" name="mortgageInterest" required class="form-control" th:value="${mortgageInterest}"/>
           </div>
-          
-          <div class="row">
-            <div class="col-6"></div>
-            <div class="col-6 mb-3">
-              <button type="submit" class="btn btn-primary w-100">Calculate</button>
-            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6"></div>
+          <div class="col-6 mb-3">
+            <button type="submit" class="btn btn-primary w-100">Calculate</button>
           </div>
-          <div class="row">
-            <div class="col-6"></div>
-            <div class="col-6 mb-3">
-              <button type="reset" class="btn btn-clear w-100">Clear</button>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-6"></div>
+          <div class="col-6 mb-3">
+            <button type="reset" class="btn btn-clear w-100">Clear</button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
+</div>
+
+<!-- JavaScript to auto-update SHIF -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const basicSalaryInput = document.getElementById('basicSalary');
+    const allowanceStatutoryInput = document.getElementById('otherAllowance1');
+    const shifInput = document.getElementById('shif');
+    const housingLevyInput = document.getElementById('housingLevy');
+
+    function updateFields() {
+      const basicSalary = parseFloat(basicSalaryInput.value) || 0;
+      const allowanceStatutory = parseFloat(allowanceStatutoryInput.value) || 0;
+      const total = basicSalary + allowanceStatutory;
+
+      const shif = (total * 0.0275).toFixed(2);        // 2.75%
+      const housingLevy = (total * 0.015).toFixed(2);  // 1.5% (you can adjust this rate)
+
+      shifInput.value = shif;
+      housingLevyInput.value = housingLevy;
+    }
+
+    basicSalaryInput.addEventListener('input', updateFields);
+    allowanceStatutoryInput.addEventListener('input', updateFields);
+
+    updateFields(); // Trigger once on load in case fields are pre-filled
+  });
+</script>
 
 </body>
 </html>
