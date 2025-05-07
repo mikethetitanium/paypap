@@ -73,6 +73,17 @@
       border-color: #ffb300;
     }
 
+    .btn-clear {
+      background-color: #bdbdbd; /* Gray color for clear button */
+      color: #3e2723; /* Deep brown text */
+      border: 1px solid #bdbdbd;
+    }
+
+    .btn-clear:hover {
+      background-color: #9e9e9e; /* Darker gray on hover */
+      border-color: #9e9e9e;
+    }
+
     .row {
       margin-bottom: 20px; /* Space between form rows */
     }
@@ -82,7 +93,6 @@
       max-height: 80vh; /* Limit height to 80% of the viewport */
       overflow-y: auto; /* Enable scroll inside the card if content exceeds */
     }
-
   </style>
 </head>
 <body>
@@ -95,36 +105,63 @@
         <form th:action="@{/calculate}" method="post">
           <div class="row">
             <div class="col-6 mb-3"><label for="basicSalary">Basic Salary:</label></div>
-            <div class="col-6 mb-3"><input type="number" id="basicSalary" name="basicSalary" required class="form-control"></div>
+            <div class="col-6 mb-3">
+              <input type="number" step="any" id="basicSalary" name="basicSalary" required class="form-control" th:value="${basicSalary}"/>
+            </div>
           </div>
           <div class="row">
             <div class="col-6 mb-3"><label for="otherAllowance1">Other Allowances(Statutory):</label></div>
-            <div class="col-6 mb-3"><input type="number" value="0" id="otherAllowance1" name="otherAllowance1" required class="form-control"></div>
+            <div class="col-6 mb-3">
+              <input type="number" step="any" id="otherAllowance1" name="otherAllowance1" required class="form-control" th:value="${otherAllowance1}"/>
+            </div>
           </div>
           <div class="row">
-            <div class="col-6 mb-3"><label for="otherAllowance">Other Allowances(Non - Statutory ; Only impact PAYE):</label></div>
-            <div class="col-6 mb-3"><input type="number" value="0" id="otherAllowance" name="otherAllowance" required class="form-control"></div>
+            <div class="col-6 mb-3"><label for="otherAllowance">Other Allowances(Non - Statutory):</label></div>
+            <div class="col-6 mb-3">
+              <input type="number" step="any" id="otherAllowance" name="otherAllowance" required class="form-control" th:value="${otherAllowance}"/>
+            </div>
           </div>
           <div class="row">
             <div class="col-6 mb-3"><label for="pensionContribution">Pension Contribution:</label></div>
-            <div class="col-6 mb-3"><input type="number" value="0" id="pensionContribution" name="pensionContribution" required class="form-control"></div>
+            <div class="col-6 mb-3">
+              <input type="number" step="any" id="pensionContribution" name="pensionContribution" required class="form-control" th:value="${pensionContribution}"/>
+            </div>
           </div>
           <div class="row">
             <div class="col-6 mb-3"><label for="nssfContribution">NSSF Contribution:</label></div>
-            <div class="col-6 mb-3"><input type="number" value="0" id="nssfContribution" name="nssfContribution" required class="form-control"></div>
+            <div class="col-6 mb-3">
+              <input type="number" step="any" id="nssfContribution" name="nssfContribution" required class="form-control" th:value="${nssfContribution}"/>
+            </div>
           </div>
           <div class="row">
             <div class="col-6 mb-3"><label for="housingLevy">Housing Levy:</label></div>
-            <div class="col-6 mb-3"><input type="number" value="0" id="housingLevy" name="housingLevy" required class="form-control"></div>
+            <div class="col-6 mb-3">
+              <input type="number" step="any" id="housingLevy" name="housingLevy" required class="form-control" th:value="${housingLevy}"/>
+            </div>
           </div>
           <div class="row">
             <div class="col-6 mb-3"><label for="shif">SHIF:</label></div>
-            <div class="col-6 mb-3"><input type="number" value="0" id="shif" name="shif" required class="form-control"></div>
+            <div class="col-6 mb-3">
+              <input type="number" step="any" id="shif" name="shif" required class="form-control" th:value="${shif}"/>
+            </div>
           </div>
+           <div class="row">
+            <div class="col-6 mb-3"><label for="mortgageInterest">Mortgage Interest:</label></div>
+            <div class="col-6 mb-3">
+              <input type="number" step="any" id="mortgageInterest" name="mortgageInterest" required class="form-control" th:value="${mortgageInterest}"/>
+            </div>
+          </div>
+          
           <div class="row">
             <div class="col-6"></div>
             <div class="col-6 mb-3">
               <button type="submit" class="btn btn-primary w-100">Calculate</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6"></div>
+            <div class="col-6 mb-3">
+              <button type="reset" class="btn btn-clear w-100">Clear</button>
             </div>
           </div>
         </form>
