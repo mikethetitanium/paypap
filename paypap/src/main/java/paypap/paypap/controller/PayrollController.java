@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class PayrollController {
@@ -58,6 +59,7 @@ public class PayrollController {
         double taxableIncome = grossSalary - consideredContribution-consideredMortgage;
         double tax = calculateTax(taxableIncome);
         double netSalary = grossSalary - tax;
+        double shifcal = calculateShif(basicSalary, otherAllowance); // Calculate SHIF based on basic salary and other allowance
 
         // Add calculated values to the model for display in the result page
         model.addAttribute("grossSalary", grossSalary);
@@ -66,6 +68,7 @@ public class PayrollController {
         model.addAttribute("taxableIncome", taxableIncome);
         model.addAttribute("tax", tax);
         model.addAttribute("netSalary", netSalary);
+        model.addAttribute("shifcal", shifcal); // Add SHIF calculation result to the model
 
         // Add form field values to the model to retain them after form submission
         model.addAttribute("basicSalary", basicSalary);
@@ -75,9 +78,19 @@ public class PayrollController {
         model.addAttribute("nssfContribution", nssfContribution);
         model.addAttribute("housingLevy", housingLevy);
         model.addAttribute("shif", shif);
+        model.addAttribute("shifcal", shifcal);
 
         return "payslip-result"; // Redirect to result page
     }
+    
+    @PostMapping("/calculate-shif")
+    @ResponseBody
+    public String calculateShifAjax(@RequestParam("basicSalary") double basicSalary,
+                                    @RequestParam("otherAllowance") double otherAllowance) {
+        double shifcal = calculateShif(basicSalary, otherAllowance);
+        return String.valueOf(shifcal);
+    }
+
 
     private double calculateTax(double taxableIncome) {
         // Simple tax calculation logic (for demonstration purposes)
@@ -95,4 +108,13 @@ public class PayrollController {
         }
         return tax;
     }
+    
+    private double calculateShif(double basicSalary, double otherAllowance) {
+		// Simple SHIF calculation logic (for demonstration purposes)
+		double shifcal = 0;
+		// Add your SHIF calculation logic here
+		double shifRate = 2.75; // Example: 2.75% of gross salary
+		shifcal = (basicSalary + otherAllowance) * (shifRate/100); // Example: 5% of gross salary
+		return shifcal;
+	}
 }
