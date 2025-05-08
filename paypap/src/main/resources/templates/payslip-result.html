@@ -4,117 +4,164 @@
     <meta charset="UTF-8">
     <title>Payroll Result</title>
     <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
     <style>
-        /* General Page Styles */
         body, html {
             height: 100%;
-            font-family: 'Georgia', serif; /* Classic serif font for vintage feel */
-            background-color: #005F6A; /* Deep blue background */
-            color: #f5f5f5; /* Light beige text color */
+            font-family: 'Georgia', serif;
+            background-color: #005F6A;
+            color: #f5f5f5;
             margin: 0;
         }
 
-        .container {
-            height: 100%; /* Full height for centering */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
         h2 {
-            color: #FFC107; /* Gold for the heading */
+            color: #FFC107;
             font-size: 2.5rem;
-            margin-bottom: 20px;
             text-align: center;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle text shadow for depth */
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        p {
-            font-size: 1.2rem;
-            color: #f5f5f5; /* Light beige text for readability */
-        }
-
-        .result-container {
-            background-color: #00796B; /* Teal background for result box */
+        .result-container, .form-container {
+            background-color: #00796B;
             border-radius: 8px;
             padding: 25px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin-top: 20px;
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
+            margin: 10px;
+            position: relative;
         }
 
         .result-container span {
             font-weight: bold;
-            color: #FFC107; /* Gold for results */
+            color: #FFC107;
         }
 
-        .result-container p {
-            font-size: 1.2rem;
-        }
-
-        .back-btn {
-            display: block;
+        .back-btn, .save-btn {
             margin-top: 20px;
             text-align: center;
             text-decoration: none;
             padding: 12px 25px;
-            background-color: #FFC107; /* Gold for the button */
-            color: #005F6A; /* Deep blue text color */
+            background-color: #FFC107;
+            color: #005F6A;
             border-radius: 5px;
             width: 120px;
+            display: block;
             margin-left: auto;
             margin-right: auto;
             text-transform: uppercase;
         }
 
-        .back-btn:hover {
-            background-color: #FF8F00; /* Darker gold on hover */
+        .back-btn:hover, .save-btn:hover {
+            background-color: #FF8F00;
+        }
+
+        input.form-control, select.form-control {
+            background-color: #004D40;
+            border: none;
+            color: #fff;
+        }
+
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .alert {
+            margin-bottom: 15px;
+            transition: opacity 0.5s ease;
+        }
+
+        .fade-out {
+            opacity: 0;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2 class="text-center">Payroll Calculation Result</h2>
-
-        <div class="result-container">
+<div class="container-fluid">
+    <h2>Payroll Calculation Result</h2>
+    <div class="row justify-content-center">
+        <!-- Payroll Results -->
+        <div class="col-md-5 result-container">
             <p>Gross Salary: <span id="grossSalary" th:text="${grossSalary}"></span></p>
             <p>Allowable Pension Contribution: <span id="consideredContribution" th:text="${consideredContribution}"></span></p>
             <p>Allowable Mortgage Interest: <span id="consideredMortgage" th:text="${consideredMortgage}"></span></p>
-            <!-- Adding SHIF and Housing Levy Results -->
             <p>SHIF Contribution: <span id="shif" th:text="${shif}"></span></p>
             <p>Housing Levy: <span id="housingLevy" th:text="${housingLevy}"></span></p>
             <p>Taxable Income: <span id="taxableIncome" th:text="${taxableIncome}"></span></p>
             <p>Tax: <span id="tax" th:text="${tax}"></span></p>
-
-            
-
-            <!-- Net Salary at the bottom -->
             <p>Net Salary: <span id="netSalary" th:text="${netSalary}"></span></p>
+            <a href="/" class="back-btn">Back</a>
+        </div>
 
-            <a href="/" class="back-btn">Back</a> <!-- Link to go back to the form -->
+        <!-- Staff/Company Info Form -->
+        <div class="col-md-5 form-container">
+            <!-- Success Message -->
+            <div id="successAlert" th:if="${message}" class="alert alert-success" role="alert">
+                <strong>Success:</strong> <span th:text="${message}"></span>
+            </div>
+
+            <!-- Form -->
+            <form method="post" th:action="@{/savePayrollDetails}">
+                <label for="companyName">Company Name</label>
+                <input type="text" id="companyName" name="companyName" class="form-control" required>
+
+                <label for="staffNumber">Staff Number</label>
+                <input type="text" id="staffNumber" name="staffNumber" class="form-control" required>
+
+                <label for="staffName">Staff Name</label>
+                <input type="text" id="staffName" name="staffName" class="form-control" required>
+
+                <label for="year">Year</label>
+                <input type="number" id="year" name="year" class="form-control" required>
+
+                <label for="month">Month</label>
+                <select id="month" name="month" class="form-control" required>
+                    <option value="">Select Month</option>
+                    <option>January</option>
+                    <option>February</option>
+                    <option>March</option>
+                    <option>April</option>
+                    <option>May</option>
+                    <option>June</option>
+                    <option>July</option>
+                    <option>August</option>
+                    <option>September</option>
+                    <option>October</option>
+                    <option>November</option>
+                    <option>December</option>
+                </select>
+
+                <button type="submit" class="save-btn">Save</button>
+            </form>
         </div>
     </div>
+</div>
 
-    <script>
-        // Function to format numbers with commas
-        function formatNumber(number) {
-            return number.toLocaleString(); // Formats number with commas
+<script>
+    function formatNumber(number) {
+        return number.toLocaleString();
+    }
+
+    // Format numbers
+    ["grossSalary", "tax", "netSalary", "shif", "housingLevy"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && !isNaN(parseFloat(el.innerText))) {
+            el.innerText = formatNumber(parseFloat(el.innerText));
         }
+    });
 
-        // Fetch the values and apply formatting
-        document.getElementById("grossSalary").innerText = formatNumber(parseFloat(document.getElementById("grossSalary").innerText));
-        document.getElementById("tax").innerText = formatNumber(parseFloat(document.getElementById("tax").innerText));
-        document.getElementById("netSalary").innerText = formatNumber(parseFloat(document.getElementById("netSalary").innerText));
-        document.getElementById("shif").innerText = formatNumber(parseFloat(document.getElementById("shif").innerText));
-        document.getElementById("housingLevy").innerText = formatNumber(parseFloat(document.getElementById("housingLevy").innerText));
-    </script>
+    // Auto-hide alert
+    setTimeout(function () {
+        const alert = document.getElementById('successAlert');
+        if (alert) {
+            alert.classList.add('fade-out');
+            setTimeout(() => alert.style.display = "none", 500);
+        }
+    }, 3000);
+</script>
 
 </body>
 </html>
