@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import paypap.paypap.Entity.StaffInfo;
 import paypap.paypap.Entity.Statutory;
+import paypap.paypap.Repository.StaffInfoRepository;
 import paypap.paypap.Repository.StatutoryRepository;
 import paypap.paypap.Service.PayrollService;
 
@@ -17,6 +20,8 @@ public class PayrollController {
     private PayrollService payrollService;
     @Autowired
     private StatutoryRepository statutoryRepository;
+    @Autowired
+    private StaffInfoRepository staffInfoRepository;
 
     @GetMapping("/")
     public String showForm(Model model) {
@@ -25,9 +30,9 @@ public class PayrollController {
     }
 
     @PostMapping("/calculate")
-    public String calculatePayslip(Statutory statutory, Model model) {
+    public String calculatePayslip(Statutory statutory, StaffInfo staffInfo, Model model) {
         // Perform payroll calculations
-        Statutory result = payrollService.calculatePayroll(statutory);
+        Statutory result = payrollService.calculatePayroll(statutory, staffInfo);
 
         // Add fields to the model for Thymeleaf
         model.addAttribute("grossSalary", result.getGrossSalary());
@@ -39,11 +44,43 @@ public class PayrollController {
         model.addAttribute("tax", result.getTax());
         model.addAttribute("netSalary", result.getNetSalary());
         
-        statutoryRepository.save(statutory);
-        model.addAttribute("message", "Payslip saved successfully.");
+        
+        
+        return "payslip-result";
+    }
+
+    @PostMapping("/savePayrollDetails")
+    public String savePayrollDetails(@ModelAttribute Statutory statutory, @ModelAttribute StaffInfo staffInfo, Model model) {
+        // Save staff info first
+        //StaffInfo savedStaff = staffInfoRepository.save(staffInfo);
+
+        // Associate saved staff with statutory object
+        //statutory.setStaffInfo(savedStaff);
+
+        // ⚠️ Perform calculations BEFORE saving statutory
+        Statutory calculatedStatutory = payrollService.calculatePayroll(statutory, staffInfo);
+
+        // Save calculated statutory data
+        //statutoryRepository.save(calculatedStatutory);
+        //staffInfoRepository.save(staffInfo);
+       // statutoryRepository.save(calculatedStatutory);
+        
+        // statutoryRepository.save(statutory);
+
+        model.addAttribute("message", "Payroll details saved successfully.");
+
+        // Add all calculated fields to the model for display
+        model.addAttribute("grossSalary", calculatedStatutory.getGrossSalary());
+        model.addAttribute("consideredContribution", calculatedStatutory.getConsideredPensionContribution());
+        model.addAttribute("consideredMortgage", calculatedStatutory.getConsideredMortgageInterest());
+        model.addAttribute("shif", calculatedStatutory.getShif());
+        model.addAttribute("housingLevy", calculatedStatutory.getHousingLevy());
+        model.addAttribute("taxableIncome", calculatedStatutory.getTaxableIncome());
+        model.addAttribute("tax", calculatedStatutory.getTax());
+        model.addAttribute("netSalary", calculatedStatutory.getNetSalary());
 
         return "payslip-result";
     }
 
-  
+    
 }

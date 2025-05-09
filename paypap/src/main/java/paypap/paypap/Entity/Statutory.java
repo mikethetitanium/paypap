@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -16,6 +18,10 @@ public class Statutory {
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long calculation_id;
+    
+    @ManyToOne
+    @JoinColumn(name = "staff_id", referencedColumnName = "id")  // Foreign key
+    private StaffInfo staffInfo;
 
     @Column(name = "basic_salary")
     private double basicSalary;

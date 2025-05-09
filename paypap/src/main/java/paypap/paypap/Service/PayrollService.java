@@ -3,7 +3,9 @@ package paypap.paypap.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import paypap.paypap.Entity.StaffInfo;
 import paypap.paypap.Entity.Statutory;
+import paypap.paypap.Repository.StaffInfoRepository;
 import paypap.paypap.Repository.StatutoryRepository;
 
 @Service
@@ -11,12 +13,14 @@ public class PayrollService {
 
     @Autowired
     private StatutoryRepository statutoryRepository;
+    @Autowired
+    private StaffInfoRepository staffInfoRepository;
 
-    public Statutory calculatePayroll(Statutory statutory) {
-        // Step 1: Gross Salary
+    public Statutory calculatePayroll(Statutory statutory, StaffInfo staffInfo) {
+        // Step 1: Gross Salary Calculation
         double grossSalary = statutory.getBasicSalary()
-                                + statutory.getOtherAllowance()
-                                + statutory.getOtherAllowance1();
+                                     + statutory.getOtherAllowance()
+                                     + statutory.getOtherAllowance1();
 
         // Step 2: Cap deductions
         double contributionLimit = 30000;
@@ -35,7 +39,7 @@ public class PayrollService {
 
         // Step 5: Tax and Net Salary
         double tax = calculateTax(taxableIncome);
-        double netSalary = grossSalary - tax - shif - housingLevy;
+        double netSalary = grossSalary - tax - shif - housingLevy - statutory.getPensionContribution() - statutory.getNssfContribution() - statutory.getMortgageInterest();
 
         // Step 6: Populate Entity
         statutory.setGrossSalary(grossSalary);
@@ -47,7 +51,13 @@ public class PayrollService {
         statutory.setTax(tax);
         statutory.setNetSalary(netSalary);
 
-        // Step 7: Save to database
+        // If StaffInfo is required, save it first and link it to Statutory
+        if (staffInfo != null) {
+            staffInfoRepository.save(staffInfo); // Save StaffInfo to the DB first
+            statutory.setStaffInfo(staffInfo); // Link StaffInfo to Statutory
+        }
+
+        // Step 7: Save the Statutory object to the database
         return statutoryRepository.save(statutory);
     }
 
